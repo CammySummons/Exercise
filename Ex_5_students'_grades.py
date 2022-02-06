@@ -4,15 +4,16 @@ uni_grade = ""
 greatest_mark = 0
 divider = 0
 mark_total = 0
-mark = -1
 count = -1  # Keeps track of what place items from lists are
 names_list = []
 marks_list = []
 
 
 while name != "X":
+    mark = -1
     name = input("Student name: ")
-    mark = int(input("Exam mark: "))
+    while mark > 100 and name != "X" or mark < 0 and name != "X":
+        mark = int(input("Exam mark: "))
     if name == "X":
         mark = 0
         divider -= 1
@@ -58,4 +59,5 @@ for item in names_list:
         uni_grade = "D"
     elif 0 <= marks_list[count] <= 39:
         uni_grade = "E"
-    print("Student: {}     Grade: {}".format(names_list[count], uni_grade))
+    print("Student: {}     Mark: {}     University Grade: {}"
+          .format(names_list[count], marks_list[count], uni_grade))
