@@ -23,8 +23,8 @@ while length != "X" or width != "X" or building_type != "X":
 
     concrete_volume = length*width*depth
     concrete_volume_total += concrete_volume
-    print("\nThe volume of concrete required for a slab with a length of {}, a width"
-          " of {} and a depth of {} is {} cubic metres"
+    print("\nThe volume of concrete required for a slab with a length of {}, a"
+          " width of {} and a depth of {} is {} cubic metres"
           .format(length, width, depth, concrete_volume))
     print("Total concrete volume required for all buildings: {} cubic metres\n"
           .format(concrete_volume_total))
