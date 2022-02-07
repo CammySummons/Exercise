@@ -1,4 +1,3 @@
-
 bicycling = int(input("Number of hours spent bicycling: "))
 jogging = int(input("Number of hours spent jogging: "))
 swimming = int(input("Number of hours spent swimming: "))
