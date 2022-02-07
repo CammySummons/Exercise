@@ -6,8 +6,10 @@ mark_total = 0
 
 
 while name != "X":
+    mark = -1
     name = input("Student name: ")
-    mark = int(input("Exam mark: "))
+    while mark > 100 and name != "X" or mark < 0 and name != "X":
+        mark = int(input("Exam mark: "))
     if name == "X":
         mark = 0
     divider += 1
