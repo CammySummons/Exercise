@@ -1,6 +1,6 @@
 time = ""
 times = []
-fastest = 0
+fastest = 100000000000000000000000000
 
 while time != -1:
     time = int(input("Enter a time (or type -1 to finish): "))
