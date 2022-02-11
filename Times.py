@@ -12,7 +12,7 @@ print("---Times---")
 for item in times:
     print(item)
     total += int(item)
-    if fastest < item:
+    if fastest > item:
         fastest = item
 
 average = total/len(times)
