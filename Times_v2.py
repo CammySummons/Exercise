@@ -2,6 +2,7 @@ times_100m = []
 times_200m = []
 times_400m = []
 valid = False
+loop = True
 track_type = ""
 go = "Y"  # Decides whether to loop grab_times or not
 
@@ -57,31 +58,38 @@ while go != "N":
     elif track_type == "400m":
         go = grab_times(times_400m)
 
-# Decides if you want to clear data
-while not valid:
-    clear = input("Enter track type for data you want to clear (else enter -1): ")
-    if clear == "100m":
-        times_100m = []
-        print("Times cleared")
-    elif clear == "200m":
-        times_200m = []
-        print("Times cleared")
-    elif clear == "400m":
-        times_400m = []
-        print("Times cleared")
-    elif clear == "-1":
-        valid = True
-    else:
-        valid = False
-
 # Printing results
-print("\n----All Results----\n")
-if times_100m != []:
-    print("**** 100m Track Times ****")
-    print_results(times_100m)
-if times_200m != []:
-    print("**** 200m Track Times ****")
-    print_results(times_200m)
-if times_400m != []:
-    print("**** 400m Track Times ****")
-    print_results(times_400m)
+while loop:
+    result_selection = input("Which track results would you like to view?"
+                             " (You can also press 'c' to clear data "
+                             "and -1 to exit): ")
+    if result_selection == "100m" and times_100m != []:
+        print("\n**** 100m Track Times ****")
+        print_results(times_100m)
+    elif result_selection == "200m" and times_200m != []:
+        print("\n**** 200m Track Times ****")
+        print_results(times_200m)
+    elif result_selection == "400m" and times_400m != []:
+        print("\n**** 400m Track Times ****")
+        print_results(times_400m)
+    elif result_selection.lower() == "c":
+        # Decides if you want to clear data
+        while not valid:
+            clear = input("Enter track type for data you want to clear (else enter -1): ")
+            if clear == "100m":
+                times_100m = []
+                print("Times cleared")
+                valid = True
+            elif clear == "200m":
+                times_200m = []
+                print("Times cleared")
+                valid = True
+            elif clear == "400m":
+                times_400m = []
+                print("Times cleared")
+                valid = True
+
+    elif result_selection == "-1":
+        loop = False
+    else:
+        print("\nNo times to display\n")
