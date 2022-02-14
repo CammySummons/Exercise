@@ -72,6 +72,7 @@ while loop:
     elif result_selection == "400m" and times_400m != []:
         print("\n**** 400m Track Times ****")
         print_results(times_400m)
+
     elif result_selection.lower() == "c":
         # Decides if you want to clear data
         while not valid:
