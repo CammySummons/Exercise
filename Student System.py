@@ -113,7 +113,7 @@ def find_student():
     student_name = input("\nWhat is the student's name?: ")
     found = False
     for student in student_list:
-        if student.name == student_name:
+        if student.name.lower() == student_name.lower():
             Student.display_info(student)
             found = True
 
@@ -152,13 +152,16 @@ def remove_student():
 
 
 # Integer checker
-def is_integer(number):
-    try:
-        int(number)
-    except ValueError:
-        return False
-    else:
-        return float(number).is_integer()
+def is_integer(text):
+    valid = False
+    while not valid:
+        try:
+            number_to_check = int(input(text))
+            if isinstance(number_to_check, int):
+                valid = True
+                return number_to_check
+        except ValueError:
+            print("You must enter a whole number!\n")
 
 
 # Main Menu
