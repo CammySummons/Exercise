@@ -2,12 +2,15 @@
 # Imports
 from tkinter import *
 import random
+from playsound import playsound
+
 
 # Set up the interface
 win = Tk()
 win.title("Xp Grind GUI")
-win.geometry('800x550')
+win.geometry('800x550+350+100')
 win.minsize(800, 550)
+win.iconbitmap('C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Icon.ico')
 
 
 # Class for colour shop
@@ -21,11 +24,13 @@ class Colour:
 def change_number(id):
     if id == 1:
         num.set(num.get()+random.randrange(low_bound, high_bound))
+        playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Click.wav", False)
 
 
 def save_game():
     global python_file
     global colour_show
+    playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Save.mp3", False)
 
     # Saves Xp
     python_file = open("Xp Grind -  Xp Storage.txt", "w")
@@ -41,9 +46,9 @@ def save_game():
     python_file.close()
 
     # Saves acps
-    global milliseconds
+    global clicks_per_second
     python_file = open("Xp Grind - acps storage.txt", "w")
-    python_file.write(str(milliseconds))
+    python_file.write(str(clicks_per_second))
     python_file.close()
 
 
@@ -69,8 +74,10 @@ def restart_game():
     python_file.close()
 
     # Resets acps
-    global milliseconds
-    milliseconds = 100000
+    global clicks_per_second
+    python_file = open("Xp Grind - acps storage.txt", "w")
+    python_file.writelines("0")
+    python_file.close()
 
 
 def purchase(price, colour_name, id):
@@ -91,6 +98,9 @@ def purchase(price, colour_name, id):
         sold = Label(frame, bg="dark orange", text="SOLD")
         sold.grid(row=coords[0]-1, column=coords[1]+2, sticky="WE")
         colour_show[id] = "False"
+        playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Purchase.wav", False)
+    else:
+        playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Error.wav", False)
 
 
 # Changes colour of text
@@ -98,22 +108,32 @@ def change_colour(colour):
     global xp_total_label
     xp_total_label.config(fg=colour)
     xp_range_label.config(fg=colour)
+    playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Colour Equip.wav", False)
 
 
-def define_var(time_per_tick, price):
-    global milliseconds
+def define_var(cps, price, play):
+    global clicks_per_second
     global cost
-    milliseconds = time_per_tick
+    global current_acps
+    global acps_label
+    clicks_per_second += cps
+    current_acps = f"Automatic Clicks Per Second: {clicks_per_second}"
+    acps_label.config(text=current_acps)
     cost = price
     if num.get() >= cost:
         num.set(num.get()-cost)
         # num_of_buy += 1
         my_time()
+        if play:
+            playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Purchase.wav", False)
+    else:
+        playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Error.wav", False)
 
 
 def my_time():
-    num.set(num.get()+1)
-    xp_total_label.after(milliseconds, my_time)  # time delay of x(interval) milliseconds
+    global clicks_per_second
+    num.set(num.get()+clicks_per_second)
+    xp_total_label.after(1000, my_time)  # time delay of x(interval) milliseconds
 
 
 # Places inventory buttons and labels
@@ -133,10 +153,10 @@ def place_clr_shop_obj(lbl_name, colour, price, row, column, colour_id):
 
 
 # Places upgrade shop buttons and labels (Automatic clicks per second)
-def place_up_shop_obj(lbl_name, price, row, column, time_per_tick, num_of_buy):
+def place_up_shop_obj(lbl_name, price, row, column, acps):
     Label(frame, bg="light grey", text=lbl_name)\
         .grid(row=row, column=column-1, sticky="WE", pady=10, padx=10, ipadx=20)
-    Button(frame, bg="yellow", text="Purchase", command=lambda: define_var(time_per_tick, price))\
+    Button(frame, bg="yellow", text="Purchase", command=lambda: define_var(acps, price, True))\
         .grid(row=row, column=column, sticky="WE", pady=10, padx=10)
     # Label(frame, bg="black", fg="white", textvariable=num_of_buy)\
     #     .grid(row=row, column=column+1, sticky="W", pady=10, padx=10, ipadx=20)
@@ -166,6 +186,15 @@ python_file = open("Xp Grind - Colour storage.txt", "r")
 list_of_lines = python_file.readlines()
 for line in list_of_lines:
     colour_show.append(line.strip("\n"))
+
+# Getting acps
+python_file = open("Xp Grind - acps storage.txt", "r")
+acps = python_file.read()
+if acps != "":
+    clicks_per_second = int(acps)
+else:
+    clicks_per_second = 0
+python_file.close()
 
 
 # ---------Colour---------
@@ -258,13 +287,19 @@ if not pink.not_purchased:
 # ------------Upgrade Shop--------------
 Label(frame, text="Upgrade Shop").grid(columnspan=2, row=3, column=5, sticky="WE", padx=10)
 
-# Layout: name, price, row, column, milliseconds, amount bought
-place_up_shop_obj("Wooden hand: 0.3acps - 200xp", 200, 4, 6, 3000, 0)
-place_up_shop_obj("Stone hand: 0.5acps - 300xp", 300, 5, 6, 2000, 0)
-place_up_shop_obj("Silver hand: 1.0acps - 500xp", 500, 6, 6, 1000, 0)
-place_up_shop_obj("Gold hand: 1.5acps - 700xp", 700, 7, 6, 666, 0)
-place_up_shop_obj("Diamond hand: 2.0acps - 1000xp", 1000, 8, 6, 500, 0)
+# Layout: name, price, row, column, milliseconds
+place_up_shop_obj("Wooden hand: 1acps - 200xp", 200, 4, 6, 1)
+place_up_shop_obj("Stone hand: 2acps - 300xp", 300, 5, 6, 2)
+place_up_shop_obj("Silver hand: 3acps - 500xp", 500, 6, 6, 3)
+place_up_shop_obj("Gold hand: 4acps - 700xp", 700, 7, 6, 4)
+place_up_shop_obj("Diamond hand: 5acps - 1000xp", 1000, 8, 6, 5)
+
+current_acps = f"Automatic Clicks Per Second: {clicks_per_second}"
+acps_label = Label(frame, text=current_acps, fg="white", bg="black")
+acps_label.grid(columnspan=2, row=9, column=5, sticky="W", padx=10)
 
 
+playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Background.mp3", False)
 frame.pack(fill=BOTH, expand=YES)
+define_var(0, 0, False)  # Starts acps
 win.mainloop()
