@@ -95,7 +95,7 @@ def purchase(price, colour_name, id):
         place_colour_button(f"{colour_name}:".title(), colour_name, coords[0], coords[1])
         colour_name = eval(colour_name)
         colour_name.not_purchased = False
-        sold = Label(frame, bg="dark orange", text="SOLD")
+        sold = Label(frame, font="bold", bg="dark orange", text="SOLD")
         sold.grid(row=coords[0]-1, column=coords[1]+2, sticky="WE")
         colour_show[id] = "False"
         playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Purchase.wav", False)
@@ -138,7 +138,7 @@ def my_time():
 
 # Places inventory buttons and labels
 def place_colour_button(lbl_name, colour_code, row_btn, column_btn):
-    Label(frame, bg="light grey", text=lbl_name)\
+    Label(frame, font=("Comic Sans MS", 8), bg="light grey", text=lbl_name)\
         .grid(row=row_btn, column=column_btn-1, sticky="WE", pady=10, padx=10)
     Button(frame, bg="yellow", text="Equip", command=lambda: change_colour(colour_code))\
         .grid(row=row_btn, column=column_btn, sticky="WE", pady=10, padx=10)
@@ -146,7 +146,7 @@ def place_colour_button(lbl_name, colour_code, row_btn, column_btn):
 
 # Places colour shop buttons and labels
 def place_clr_shop_obj(lbl_name, colour, price, row, column, colour_id):
-    Label(frame, bg="light grey", text=lbl_name)\
+    Label(frame, font=("Comic Sans MS", 8), bg="light grey", text=lbl_name)\
         .grid(row=row, column=column-1, sticky="WE", pady=10, padx=10, ipadx=20)
     Button(frame, bg="yellow", text="Purchase", command=lambda: purchase(price, colour.lower(), colour_id))\
         .grid(row=row, column=column, sticky="WE", pady=10, padx=10)
@@ -154,12 +154,10 @@ def place_clr_shop_obj(lbl_name, colour, price, row, column, colour_id):
 
 # Places upgrade shop buttons and labels (Automatic clicks per second)
 def place_up_shop_obj(lbl_name, price, row, column, acps):
-    Label(frame, bg="light grey", text=lbl_name)\
+    Label(frame, font=("Comic Sans MS", 8), bg="light grey", text=lbl_name)\
         .grid(row=row, column=column-1, sticky="WE", pady=10, padx=10, ipadx=20)
     Button(frame, bg="yellow", text="Purchase", command=lambda: define_var(acps, price, True))\
         .grid(row=row, column=column, sticky="WE", pady=10, padx=10)
-    # Label(frame, bg="black", fg="white", textvariable=num_of_buy)\
-    #     .grid(row=row, column=column+1, sticky="W", pady=10, padx=10, ipadx=20)
 
 
 # --------------Declaring Variables---------------
@@ -215,9 +213,9 @@ pink = Colour(True)
 xp_button = Button(frame, bg="orange", text="Gain Xp", command=lambda: change_number(1)).grid(row=0, column=1, sticky="WE", pady=10, padx=10)
 
 # Displays xp and range of xp
-xp_total_label = Label(frame, textvariable=num, font=("Courier", 24, "bold"), bg="black", fg="white")
-xp_total_label.grid(row=0, column=2, sticky=E, pady=10)
-xp_range_label = Label(frame, text=str(xp_range), font=("Courier", 10, "bold"), bg="black", fg="white")
+xp_total_label = Label(frame, textvariable=num, font=("Comic Sans MS", 24, "bold"), bg="black", fg="white")
+xp_total_label.grid(row=0, column=2, sticky="E", pady=10)
+xp_range_label = Label(frame, text=str(xp_range), font=("Comic Sans MS", 10, "bold"), bg="black", fg="white")
 xp_range_label.grid(row=0, column=3, sticky=E, padx=10, pady=10)
 
 save_button = Button(frame, bg="light blue", text="Save Game", command=lambda: save_game()).grid(row=0, column=5, sticky="W", pady=10, padx=10)
@@ -225,10 +223,10 @@ restart_button = Button(frame, bg="red", text="Restart Game", command=lambda: re
 
 
 # -------------------Colour shop----------------------
-Label(frame, text="Colour Shop").grid(columnspan=2, row=3, column=3, sticky="WE", padx=10)
+Label(frame, font=("Comic Sans MS", 10, "bold"), text="Colour Shop").grid(columnspan=2, row=3, column=3, sticky="WE", padx=10)
 
 place_clr_shop_obj("Yellow  -  Price: 100xp", "yellow", 100, 4, 4, 1)
-place_clr_shop_obj("Green  -  Price: 20000xp", "lime", 20000, 5, 4, 2)
+place_clr_shop_obj("Lime  -  Price: 20000xp", "lime", 20000, 5, 4, 2)
 place_clr_shop_obj("Light Blue  -  Price: 1000xp", "Light Blue", 1000, 6, 4, 3)
 place_clr_shop_obj("Purple  -  Price: 1000xp", "Purple", 1000, 7, 4, 4)
 place_clr_shop_obj("Red  -  Price: 5000xp", "Red", 5000, 8, 4, 5)
@@ -238,7 +236,7 @@ place_clr_shop_obj("Pink  -  Price: 1000xp", "Pink", 1000, 11, 4, 8)
 
 
 # --------------Inventory---------------
-Label(frame, text="Inventory").grid(columnspan=2, row=3, column=1, sticky="WE", padx=10)
+Label(frame, font=("Comic Sans MS", 10,  "bold"), text="Inventory").grid(columnspan=2, row=3, column=1, sticky="WE", padx=10)
 
 yellow_coordinates = [5, 2]
 lime_coordinates = [6, 2]
@@ -263,39 +261,39 @@ if not white.not_purchased:
     place_colour_button("White:", "white", 4, 2)
 if not yellow.not_purchased:
     place_colour_button("Yellow:", "yellow", 5, 2)
-    Label(frame, bg="dark orange", text="SOLD").grid(row=4, column=4, sticky="WE")
+    Label(frame, font=("Arial", 8, "bold"), bg="dark orange", text="SOLD").grid(row=4, column=4, sticky="WE")
 if not lime.not_purchased:
-    place_colour_button("Green:", "lime", 6, 2)
-    Label(frame, bg="dark orange", text="SOLD").grid(row=5, column=4, sticky="WE")
+    place_colour_button("Lime:", "lime", 6, 2)
+    Label(frame, font=("Arial", 8, "bold"), bg="dark orange", text="SOLD").grid(row=5, column=4, sticky="WE")
 if not lightblue.not_purchased:
     place_colour_button("Light Blue:", "light blue", 7, 2)
-    Label(frame, bg="dark orange", text="SOLD").grid(row=6, column=4, sticky="WE")
+    Label(frame, font=("Arial", 8, "bold"), bg="dark orange", text="SOLD").grid(row=6, column=4, sticky="WE")
 if not red.not_purchased:
     place_colour_button("Red:", "red", 8, 2)
-    Label(frame, bg="dark orange", text="SOLD").grid(row=7, column=4, sticky="WE")
+    Label(frame, font=("Arial", 8, "bold"), bg="dark orange", text="SOLD").grid(row=7, column=4, sticky="WE")
 if not orange.not_purchased:
     place_colour_button("Orange:", "orange", 9, 2)
-    Label(frame, bg="dark orange", text="SOLD").grid(row=8, column=4, sticky="WE")
+    Label(frame, font=("Arial", 8, "bold"), bg="dark orange", text="SOLD").grid(row=8, column=4, sticky="WE")
 if not blue.not_purchased:
     place_colour_button("Blue:", "blue", 10, 2)
-    Label(frame, bg="dark orange", text="SOLD").grid(row=9, column=4, sticky="WE")
+    Label(frame, font=("Arial", 8, "bold"), bg="dark orange", text="SOLD").grid(row=9, column=4, sticky="WE")
 if not pink.not_purchased:
     place_colour_button("Pink:", "pink", 11, 2)
-    Label(frame, bg="dark orange", text="SOLD").grid(row=10, column=4, sticky="WE")
+    Label(frame, font=("Arial", 8, "bold"), bg="dark orange", text="SOLD").grid(row=10, column=4, sticky="WE")
 
 
 # ------------Upgrade Shop--------------
-Label(frame, text="Upgrade Shop").grid(columnspan=2, row=3, column=5, sticky="WE", padx=10)
+Label(frame, font=("Comic Sans MS", 10, "bold"), text="Upgrade Shop").grid(columnspan=2, row=3, column=5, sticky="WE", padx=10)
 
-# Layout: name, price, row, column, milliseconds
-place_up_shop_obj("Wooden hand: 1acps - 200xp", 200, 4, 6, 1)
-place_up_shop_obj("Stone hand: 2acps - 300xp", 300, 5, 6, 2)
-place_up_shop_obj("Silver hand: 3acps - 500xp", 500, 6, 6, 3)
-place_up_shop_obj("Gold hand: 4acps - 700xp", 700, 7, 6, 4)
-place_up_shop_obj("Diamond hand: 5acps - 1000xp", 1000, 8, 6, 5)
+# Layout: name, price, row, column, acps
+place_up_shop_obj("Wooden hand: 1acps - 500xp", 500, 4, 6, 1)
+place_up_shop_obj("Stone hand: 3acps - 1000xp", 1000, 5, 6, 3)
+place_up_shop_obj("Silver hand: 7acps - 2000xp", 2000, 6, 6, 7)
+place_up_shop_obj("Gold hand: 15acps - 4000xp", 4000, 7, 6, 15)
+place_up_shop_obj("Diamond hand: 31acps - 8000xp", 8000, 8, 6, 31)
 
 current_acps = f"Automatic Clicks Per Second: {clicks_per_second}"
-acps_label = Label(frame, text=current_acps, fg="white", bg="black")
+acps_label = Label(frame, font=("Comic Sans MS", 10, "bold"), text=current_acps, fg="white", bg="black")
 acps_label.grid(columnspan=2, row=9, column=5, sticky="W", padx=10)
 
 
