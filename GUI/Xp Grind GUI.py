@@ -95,7 +95,7 @@ def purchase(price, colour_name, id):
         place_colour_button(f"{colour_name}:".title(), colour_name, coords[0], coords[1])
         colour_name = eval(colour_name)
         colour_name.not_purchased = False
-        sold = Label(frame, font="bold", bg="dark orange", text="SOLD")
+        sold = Label(frame, font=("Arial", 8, "bold"), bg="dark orange", text="SOLD")
         sold.grid(row=coords[0]-1, column=coords[1]+2, sticky="WE")
         colour_show[id] = "False"
         playsound("C:\\Users\sammy\OneDrive - Middleton Grange School\DTC\Year 13 2022\AS3.7 91906 Programming\Exercise\GUI\Purchase.wav", False)
